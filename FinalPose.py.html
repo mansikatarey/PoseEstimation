@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>FinalPose.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FinalPose.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">cv2</span>
+<span class="s0">import </span><span class="s1">time</span>
+<span class="s0">import </span><span class="s1">Pose </span><span class="s0">as </span><span class="s1">pm</span>
+
+
+<span class="s1">cap = cv2.VideoCapture(</span><span class="s2">'PoseVideos/2.mp4'</span><span class="s1">)</span>
+<span class="s1">pTime = </span><span class="s3">0</span>
+<span class="s1">detector = pm.poseDetector()</span>
+<span class="s0">while True</span><span class="s1">:</span>
+        <span class="s1">success</span><span class="s0">, </span><span class="s1">img = cap.read()</span>
+        <span class="s1">img = detector.findPose(img)</span>
+        <span class="s1">lmList = detector.findPosition(img</span><span class="s0">, </span><span class="s1">draw=</span><span class="s0">False</span><span class="s1">)</span>
+        <span class="s0">if </span><span class="s1">len(lmList) != </span><span class="s3">0</span><span class="s1">:</span>
+            <span class="s1">print(lmList[</span><span class="s3">14</span><span class="s1">])</span>
+            <span class="s1">cv2.circle(img</span><span class="s0">, </span><span class="s1">(lmList[</span><span class="s3">14</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]</span><span class="s0">, </span><span class="s1">lmList[</span><span class="s3">14</span><span class="s1">][</span><span class="s3">2</span><span class="s1">])</span><span class="s0">, </span><span class="s3">15</span><span class="s0">, </span><span class="s1">(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">255</span><span class="s1">)</span><span class="s0">, </span><span class="s1">cv2.FILLED)</span>
+
+        <span class="s1">cTime = time.time()</span>
+        <span class="s1">fps = </span><span class="s3">1 </span><span class="s1">/ (cTime - pTime)</span>
+        <span class="s1">pTime = cTime</span>
+
+        <span class="s1">cv2.putText(img</span><span class="s0">, </span><span class="s1">str(int(fps))</span><span class="s0">, </span><span class="s1">(</span><span class="s3">70</span><span class="s0">, </span><span class="s3">50</span><span class="s1">)</span><span class="s0">, </span><span class="s1">cv2.FONT_HERSHEY_PLAIN</span><span class="s0">, </span><span class="s3">3</span><span class="s0">,</span>
+                    <span class="s1">(</span><span class="s3">255</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s1">)</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span>
+
+        <span class="s4">#cv2.imshow(&quot;Webcam&quot;, img)</span>
+        <span class="s1">cv2.imshow(</span><span class="s2">&quot;Image&quot;</span><span class="s0">, </span><span class="s1">img)</span>
+        <span class="s4">#cv2.waitKey(1)</span>
+</pre>
+</body>
+</html>
